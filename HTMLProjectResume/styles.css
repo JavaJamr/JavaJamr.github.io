@@ -1,0 +1,37 @@
+body{
+  background-color: darkblue;
+}
+.title {
+	color: #5C6AC4;
+} 
+
+a.button {
+    display: inline-block;   
+    padding: 6px 12px;
+    background-color: white;
+    color: black;           
+    border: 1px solid black;
+    text-decoration: none; 
+}
+#nameRegion{
+    margin-left: 100;
+    margin-right: 100;
+    background-color: saddlebrown;
+    text-align: center
+}
+#Experience {
+    margin-left: 100px;
+    margin-right: 100px;
+    background-color: aquamarine;
+    padding-left: 10px;
+
+    border: none;
+    outline: none;
+}
+
+
+#ButtonArea{
+    margin-left: 100;
+    margin-right: 100;
+    background-color: aquamarine;  
+}
