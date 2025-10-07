@@ -1,9 +1,272 @@
 <html>
-    <title>Temperary Title</title>
-    <head><link rel="stylesheet" href="styles.css"></head>
+    <title>The Networking Game</title>
+    <head><link rel="stylesheet" href="styles.css">
+    
+<script>
+    // Sets Game Up
+    emojiArr = ["🍋", "🍎", "🍊", "🍇", "🍒", "🍌", "🥑", "🍉", "🥕","✅"];
+    
+    i = 0;
+    Data = 0;
+    reservedInformation = 0;
+    changeEverything=0;
+    Information = 0;
+    Knowledge = 0;
+    str = '';
+    Datastr = '';
+    ActiveData = 1;
+    PassiveData = 0;
+    PassiveInformation = 0.0;
+    PassiveKnowledge = 0.00;
+    openStore=0;
+    //Creates a timer to passively give Data, Information, & Knowledge
+    function triggerPassive() {
+        Data += PassiveData;
+        Knowledge += PassiveKnowledge;
+        Information += PassiveInformation;
+        defaultText(); 
+        if (openStore==1){
+            Store(); 
+        }
+        if (changeEverything==1){
+            changeEveryColor();
+        }
+        
+    }
+    // Call triggerPassive every 1 seconds
+    setInterval(triggerPassive, 1000); //done in ms
+        //This will Display the game
+    function defaultText() {
+        if (openStore==0){
+            str = `<br><br>Total Data: ${Data.toFixed(1)}
+            <br>Total Information: ${Information.toFixed(1)}<br>Total Knowledge: ${Knowledge.toFixed(2)}<br><br>${Datastr}
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>`;
+            //toFixed() Makes it so that the text won't bug out when working with non-integers
+        document.getElementById("myDiv").innerHTML = str;
+        }
+
+    }
+    //Shows game on start
+    defaultText() 
+    //Resets all values
+    function clearfn() {
+        changeEverything=0;
+        openStore=0;
+        i = 0;
+        e=0;
+        Data = 0;
+        Information = 0;
+        Knowledge = 0;
+        str = '';
+        Datastr = '';
+        ActiveData = 1;
+        PassiveData = 0;
+        PassiveInformation = 0;
+        PassiveKnowledge = 0;
+        document.getElementById("myDiv").innerHTML = '';
+    }
+
+    //This will simply
+    function acquireData() {
+        openStore=0;
+        Data += ActiveData;
+        Datastr="✅";
+        defaultText();
+    }
+    //Clicking this 10 times proccesses information
+function acquireInformation() {
+    openStore=0;
+    Datastr = ""; 
+    if (Data >= 1) {
+        Data -= 1;
+
+        for (e = 0; e <= i; e++) {
+            Datastr += emojiArr[e];
+        }
+
+        if (i < 9) {
+            i++;
+        } else {
+            // Once filled, give 1 information
+            Information += 1;
+            i = 0;  // reset the counter
+        }
+            defaultText();
+    }}
+// Clicking this will tick down the information, as you need time to turn information into knowledge
+function acquireKnowledge() {
+    openStore=0;
+    // Make sure there is at least 10 *unreserved* information available
+    if ((Information - reservedInformation) >= 10) {
+        let localTimesRun = 0;              // let internalises the variable
+        reservedInformation += 10;          // Reserve units to prevent infinite deletion
+            defaultText();
+        
+
+        const localInterval = setInterval(() => {
+            //Only consume information that can be consumed
+            if (reservedInformation > 0 && Information > 0) {
+                reservedInformation -= 1;
+                Information -= 1;
+            }
+
+            localTimesRun++;
+            defaultText();
+
+            //After 10 ticks (10 seconds) finish
+            if (localTimesRun >= 10) {
+                clearInterval(localInterval);
+                Knowledge += 1;
+                defaultText();
+                Datastr = ""; // reset if needed
+            }
+        }, 1000);
+    } 
+}
+//Shop Scripts Which, For Updating Cost And Null Value Prevention Purposes Need To Be Updated Before AND After.
+function BuyActiveData(){
+    Store();
+    if (Data>=BuyActiveDataCost){
+        Data-=BuyActiveDataCost;
+        ActiveData+=1;
+    }
+    Store();
+}
+function BuyPassiveData(){
+    Store();
+    if ((Information-reservedInformation)>=BuyPassiveDataCost){
+        Information-=BuyPassiveDataCost;
+        PassiveData+=1;
+    Store();
+    }
+}
+function BuyPassiveInformation(){
+    Store();
+    if (Knowledge>=BuyPassiveInformationCost){
+        Knowledge-=BuyPassiveInformationCost;
+        PassiveInformation+=0.1;
+    }
+    Store();
+}
+function BuyPassiveKnowledge(){
+    Store();
+    if (Data>=BuyPassiveKnowledgeCost){
+        Data-=BuyPassiveKnowledgeCost;
+        PassiveKnowledge+=0.01;
+    }
+    Store();
+}
+    
+function randomColor() {
+    const r = Math.floor(Math.random() * 256); // 0-255
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+function changeEveryColor(){
+        const myDiv = document.getElementById("myDiv");
+        const myGameInstructions = document.getElementById("myGameInstructions"); 
+        const myButtonsForGame = document.getElementById("myButtonsForGame");
+        const SameColor = randomColor();
+        
+        if (myDiv) myDiv.style.backgroundColor = SameColor;
+        if (myGameInstructions) myGameInstructions.style.backgroundColor = SameColor;
+        if (myButtonsForGame) myButtonsForGame.style.backgroundColor = SameColor;
+        
+        // Call Store AFTER the above to avoid overwriting elements   
+    
+
+
+        const nameRegion = document.getElementById("nameRegion");
+        const Experience = document.getElementById("Experience");
+        const ButtonArea = document.getElementById("ButtonArea");
+
+        if (nameRegion) nameRegion.style.backgroundColor = randomColor();
+        if (Experience) Experience.style.backgroundColor = randomColor();
+        
+        if (ButtonArea) ButtonArea.style.backgroundColor = randomColor();
+
+        // Change the background of the entire page
+        document.body.style.backgroundColor = randomColor();
+}
+
+function BuyBackgroundSwap() {
+    if (Knowledge >= 10) {
+        Knowledge -= 10;
+        changeEveryColor();
+    }
+}
+
+
+
+
+function BuyInfiniteSwap(){
+    Store();
+    if (Knowledge>=1000){
+        Knowledge-=1000;
+        changeEverything=1;
+
+    }
+    Store();
+}
+
+
+function Store() {
+    openStore = 1;
+    
+    // Store header info
+    let str = `
+        <div>
+            <strong>Store</strong><br><br>
+            Total Data: ${Data.toFixed(1)}  |  Active Data (Per Click): ${ActiveData}  |   Data Per Second: ${PassiveData}<br>
+            Total Information: ${Information.toFixed(1)}  |   Information Per Second: ${PassiveInformation.toFixed(1)}<br>
+            Total Knowledge: ${Knowledge.toFixed(2)}  |   Knowedge Per Second: ${PassiveKnowledge.toFixed(2)}<br><br>
+        </div>
+        <div id="buttonContainer" style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px;"></div>
+    `;
+
+    document.getElementById("myDiv").innerHTML = str;
+
+    let container = document.getElementById("buttonContainer");
+
+    // Helper function to create a styled button
+    function createButton(text, action) {
+        let btn = document.createElement("button");
+        btn.textContent = text;
+        btn.style.padding = "12px 20px";
+        btn.style.fontSize = "16px";
+        btn.style.cursor = "pointer";
+        btn.onclick = action;
+        container.appendChild(btn);
+    }
+    //Information For Shops That Requires Updates
+    BuyActiveDataCost=ActiveData*ActiveData*4;
+    BuyPassiveDataCost=5*PassiveData+1;
+    BuyPassiveInformationCost=3*(10*PassiveInformation+1);
+    BuyPassiveKnowledgeCost=100*((100*PassiveKnowledge+1)*(100*PassiveKnowledge+1));
+    
+    BADString="Buy 1 Active Data For "+BuyActiveDataCost.toFixed(0)+" Data";
+    PDString="Buy 1 Passive Data For "+BuyPassiveDataCost.toFixed(0)+" Information";
+    PIString="Buy 0.1 Passive Information For "+BuyPassiveInformationCost.toFixed(0)+" Knowledge";
+    PKString="Buy 0.01 Passive Knowledge For "+BuyPassiveKnowledgeCost.toFixed(0)+" Data";
+    //End Of Shop Info That Requires Updates
+    
+    // Add buttons with their respective functions
+    createButton(BADString, BuyActiveData);
+    createButton(PDString, BuyPassiveData);
+    createButton(PIString, BuyPassiveInformation);
+    createButton(PKString, BuyPassiveKnowledge);
+    createButton("Change To A Random Background For 10 Knowledge", BuyBackgroundSwap);
+    createButton("Win The Networker Game For 1000 Knowledge", BuyInfiniteSwap);
+}
+
+
+</script>
+</head>
 <body>
+    
 <div id="nameRegion">
-<h1>JavaScript Coming Soon</h1>
+<h1>The Networking Game</h1>
 </div>
 <div id="Experience">
 <h1>Idea For My Java Project</h1>
@@ -20,6 +283,28 @@
     
 <p>I hope it will be fun but only time will tell</p>
 </div>
+    <div id="myButtonsForGame">
+    <div id="myGameInstructions">
+    <h3>Instructions/Premises</h3>
+    <ol>
+    <li>Collect Data - Simply running a program (for example wireshark) will give you tons of data from a network</li>
+    <li>Turn Data Into Information - However it takes time and effort to translate that data into usable information (Which is why you must keep clicking the process button)</li>
+    <li>Convert Information into Knowledge - Once you have the information, you need to read it over and draw knowledge from it which takes time to do (In this game that time is 10 seconds)</li>
+    </ol>
+    </div>
+    <h1>The Networker Game</h1>
+    <button onclick="acquireData()">Acquire Data</button>
+    <button onclick="acquireInformation()">Process Data</button>
+    <button onclick="acquireKnowledge()">Learn [Costs 10 Information]</button>
+    <button onclick="Store()">Shop</button>
+    <button onclick="clearfn()">Clear Data</button>
+   
+</div>
+    <div id="myDiv"> <!-- This is where the game is located-->
+    <h3>Loading...</h3>
+    </div>
+    
+    
 <div id="ButtonArea">
 <a href="index.html" class="button">Home</a>
 <a href="Project1Ext.html" class="button">More About Me</a>

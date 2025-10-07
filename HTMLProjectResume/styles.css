@@ -29,6 +29,20 @@ a.button {
     outline: none;
 }
 
+#myDiv{
+    
+    background-color: #def3f6;
+    font-size: 18px;
+}
+#myButtonsForGame{
+    
+    background-color: #def3f6;
+    text-align: center;
+}
+#myGameInstructions{
+    background-color: #def3f6;
+    text-align: left;
+}
 
 #ButtonArea{
     margin-left: 100;
