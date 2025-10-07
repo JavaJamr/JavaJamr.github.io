@@ -1,51 +1,53 @@
-body{
+body {
   background-color: #0076BE;
 }
+
 .title {
-	color: #5C6AC4;
-} 
+  color: #5C6AC4;
+}
 
 a.button {
-    display: inline-block;   
-    padding: 6px 12px;
-    background-color: white;
-    color: black;           
-    border: 1px solid black;
-    text-decoration: none; 
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  text-decoration: none;
 }
-#nameRegion{
-    margin-left: 100;
-    margin-right: 100;
-    background-color: #48BF91;
-    text-align: center
+
+#nameRegion {
+  margin-left: 100px;
+  margin-right: 100px;
+  background-color: #48BF91;
+  text-align: center;
 }
+
 #Experience {
-    margin-left: 100px;
-    margin-right: 100px;
-    background-color: #95D8EB;
-    padding-left: 10px;
-
-    border: none;
-    outline: none;
+  margin-left: 100px;
+  margin-right: 100px;
+  background-color: #95D8EB;
+  padding-left: 10px;
+  border: none;
+  outline: none;
 }
 
-#myDiv{
-    
-    background-color: #def3f6;
-    font-size: 18px;
-}
-#myButtonsForGame{
-    
-    background-color: #def3f6;
-    text-align: center;
-}
-#myGameInstructions{
-    background-color: #def3f6;
-    text-align: left;
+#myDiv {
+  background-color: #def3f6;
+  font-size: 18px;
 }
 
-#ButtonArea{
-    margin-left: 100;
-    margin-right: 100;
-    background-color: #95D8EB;  
+#myButtonsForGame {
+  background-color: #def3f6;
+  text-align: center;
+}
+
+#myGameInstructions {
+  background-color: #def3f6;
+  text-align: left;
+}
+
+#ButtonArea {
+  margin-left: 100px;
+  margin-right: 100px;
+  background-color: #95D8EB;
 }
